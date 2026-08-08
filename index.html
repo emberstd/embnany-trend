@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrendX</title>
+  <title>TrendX4EMIBONNIE</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -211,22 +211,25 @@
     .lang-tabs {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 3px;
-      padding: 3px;
-      border-radius: 12px;
+      gap: 2px;
+      padding: 1px 2px 2px;
+      border-radius: 11px;
       background: var(--glass-inset);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       box-shadow: 0 1px 0 var(--glass-highlight) inset;
       flex-shrink: 0;
-      width: 172px;
-      height: 62px;
+      width: 168px;
+      height: 44px;
+      line-height: 1;
+      margin: -2px 0 0;
+      align-self: flex-start;
     }
     .lang-tab {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 500;
-      height: 26px;
+      height: 20px;
       padding: 0 2px;
       border-radius: 9px;
       border: none;
@@ -414,24 +417,29 @@
 
     .text-secondary { color: var(--text-secondary); }
 
-    #support-only-tag {
-      font-size: 13px;
-      line-height: 1.4;
-      white-space: nowrap;
-      overflow: visible;
-    }
-    body[data-ui-lang="th"] #support-only-tag {
-      font-family: var(--font-th);
-      font-size: 12px;
-      line-height: 1.65;
-      letter-spacing: -0.01em;
-    }
-
     .brand-gradient {
       background: var(--gradient-neon);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+
+    .brand-mark {
+      margin: 0;
+      padding: 0;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .header-row .lang-tabs {
+      line-height: 1;
     }
 
     #theme-toggle:hover {
@@ -472,6 +480,14 @@
       text-underline-offset: 2px;
     }
 
+    .action-row {
+      margin-top: 15px;
+    }
+
+    .app-footer {
+      margin-top: 17px;
+    }
+
     .page-stack {
       padding-top: max(12px, env(safe-area-inset-top, 0px));
       padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
@@ -479,7 +495,7 @@
 
     .top-banner {
       width: min(100%, 420px);
-      margin: 0 0 14px;
+      margin: 0 0 6px;
     }
 
     .top-banner img {
@@ -529,8 +545,8 @@
 
       <!-- Header -->
       <header class="mb-1">
-        <div class="flex items-center justify-between gap-3 mb-1">
-          <h1 class="text-[22px] font-semibold tracking-tight brand-gradient shrink-0">TrendX</h1>
+        <div class="header-row mb-1">
+          <h1 class="brand-mark text-[22px] font-semibold tracking-tight brand-gradient shrink-0">TrendX4<br />EMIBONNIE</h1>
           <nav class="lang-tabs" id="lang-tabs" role="tablist">
             <button role="tab" data-lang="zh-CN" class="lang-tab active">简体中文</button>
             <button role="tab" data-lang="zh-TW" class="lang-tab">繁体中文</button>
@@ -538,7 +554,6 @@
             <button role="tab" data-lang="th" class="lang-tab">ภาษาไทย</button>
           </nav>
         </div>
-        <p class="text-[13px] text-secondary whitespace-nowrap" id="support-only-tag">仅支持 EMIBONNIE</p>
       </header>
 
       <div class="divider"></div>
@@ -568,7 +583,7 @@
       </section>
 
       <!-- Actions -->
-      <div class="flex gap-2.5 mt-5">
+      <div class="action-row flex gap-2.5">
         <button
           id="btn-random"
           class="glass-btn flex-1 flex items-center justify-center gap-2 py-3.5 px-4"
@@ -592,11 +607,7 @@
       </div>
 
       <!-- Footer -->
-      <footer class="mt-5 text-center">
-        <p
-          id="disclaimer"
-          class="text-[11px] leading-relaxed text-secondary mb-3"
-        >本工具仅提供文案灵感，不涉及任何形式的自动化作弊行为。</p>
+      <footer class="app-footer text-center">
         <button
           id="theme-toggle"
           class="text-[11px] text-secondary hover:opacity-80 transition-opacity"

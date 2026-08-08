@@ -10,54 +10,42 @@
 
   const I18N = {
     "zh-CN": {
-      supportOnlyTag: "仅支持 EMIBONNIE",
       previewLabel: "文案预览",
       charCount: (n) => `${n} 字符`,
       placeholder: "点击「随机文案」生成内容",
       randomBtn: "随机文案",
       tweetBtn: "一键发推",
       themeToggle: "◐ 切换主题",
-      disclaimer:
-        "本工具仅提供文案灵感，不涉及任何形式的自动化作弊行为。",
       createdByBefore: "由 ",
       createdByAfter: " 创建",
     },
     "zh-TW": {
-      supportOnlyTag: "僅支援 EMIBONNIE",
-      previewLabel: "假文預覽",
+      previewLabel: "文案預覽",
       charCount: (n) => `${n} 字元`,
       placeholder: "點擊「隨機文案」生成內容",
       randomBtn: "隨機文案",
       tweetBtn: "一鍵發推",
       themeToggle: "◐ 切換主題",
-      disclaimer:
-        "本工具僅提供假文靈感，不涉及任何形式的自動化作弊行為。",
       createdByBefore: "由 ",
       createdByAfter: " 創建",
     },
     en: {
-      supportOnlyTag: "Supporting EMIBONNIE Only",
       previewLabel: "Edit Preview",
       charCount: (n) => `${n} chars`,
       placeholder: 'Click "Random" to generate',
       randomBtn: "Random",
       tweetBtn: "Post Tweet",
       themeToggle: "◐ Toggle theme",
-      disclaimer:
-        "This tool provides copy inspiration only. No automated cheating involved.",
       createdByBefore: "Created by ",
       createdByAfter: "",
     },
     th: {
-      supportOnlyTag: "สนับสนุน เอมี่-บอนนี่ เท่านั้น",
       previewLabel: "แก้ไขข้อความ",
       charCount: (n) => `${n} ตัวอักษร`,
       placeholder: 'กด "สุ่มข้อความ" เพื่อสร้าง',
       randomBtn: "สุ่มข้อความ",
       tweetBtn: "โพสต์ทวีต",
       themeToggle: "◐ สลับธีม",
-      disclaimer:
-        "เครื่องมือนี้ให้แรงบันดาลใจข้อความเท่านั้น ไม่เกี่ยวข้องกับการโกงอัตโนมัติ",
       createdByBefore: "สร้างโดย ",
       createdByAfter: "",
     },
@@ -132,12 +120,10 @@
 
   function applyI18n(lang) {
     currentLang = lang;
-    $("support-only-tag").textContent = t("supportOnlyTag");
     $("preview-label").textContent = t("previewLabel");
     $("btn-random-label").textContent = t("randomBtn");
     $("btn-tweet-label").textContent = t("tweetBtn");
     $("theme-toggle").textContent = t("themeToggle");
-    $("disclaimer").textContent = t("disclaimer");
     $("created-by-before").textContent = t("createdByBefore");
     $("created-by-after").textContent = t("createdByAfter");
     preview.placeholder = t("placeholder");
