@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrendX</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/style.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Prompt:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: [
+              'Geist', 'Inter',
+              'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC',
+              'system-ui', '-apple-system', 'sans-serif',
+            ],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      --font-ui: 'Geist', 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+      --font-th: 'Prompt', 'Noto Sans Thai', var(--font-ui);
+      --neon-orange: #ff6b00;
+      --neon-orange-light: #ff9500;
+      --neon-purple: #bf00ff;
+      --neon-purple-deep: #7b2fff;
+      --gradient-neon: linear-gradient(135deg, var(--neon-orange-light) 0%, var(--neon-orange) 40%, var(--neon-purple-deep) 70%, var(--neon-purple) 100%);
+      --glass-bg: rgba(255, 245, 240, 0.55);
+      --glass-border: rgba(255, 107, 0, 0.22);
+      --glass-highlight: rgba(255, 255, 255, 0.85);
+      --glass-shadow: rgba(191, 0, 255, 0.12);
+      --glass-inset: rgba(255, 255, 255, 0.35);
+      --text-primary: #1a0a2e;
+      --text-secondary: rgba(90, 40, 120, 0.65);
+      --blur: 60px;
+    }
+    .dark {
+      --glass-bg: rgba(20, 8, 40, 0.62);
+      --glass-border: rgba(191, 0, 255, 0.28);
+      --glass-highlight: rgba(255, 149, 0, 0.15);
+      --glass-shadow: rgba(255, 107, 0, 0.2);
+      --glass-inset: rgba(255, 255, 255, 0.06);
+      --text-primary: #faf5ff;
+      --text-secondary: rgba(220, 180, 255, 0.6);
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      line-height: 1.6;
+      color: var(--text-primary);
+    }
+
+    .app-shell,
+    .app-shell h1,
+    .app-shell p,
+    .app-shell button,
+    .app-shell nav,
+    .app-shell span,
+    .app-shell footer {
+      font-family: var(--font-ui);
+    }
+
+    h1, h2, h3, h4, h5, h6 { letter-spacing: -0.02em; line-height: 1.2; }
+    p, button, label, span, nav { line-height: 1.6; }
+
+    @keyframes spin-once {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(12px, -18px) scale(1.05); }
+      66% { transform: translate(-8px, 10px) scale(0.97); }
+    }
+
+    /* ── Ambient background ── */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(160deg, #fff0f5 0%, #f5e6ff 40%, #ffe8d6 100%);
+      overflow: hidden;
+    }
+    .dark .ambient {
+      background: linear-gradient(160deg, #0a0612 0%, #120820 40%, #1a0a00 100%);
+    }
+
+    .ambient-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      animation: drift 18s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .ambient-blob-1 {
+      top: -12%; left: -8%;
+      width: 55vw; height: 55vw;
+      max-width: 520px; max-height: 520px;
+      background: rgba(255, 107, 0, 0.55);
+      animation-delay: 0s;
+    }
+    .ambient-blob-2 {
+      bottom: -15%; right: -10%;
+      width: 52vw; height: 52vw;
+      max-width: 500px; max-height: 500px;
+      background: rgba(191, 0, 255, 0.5);
+      animation-delay: -6s;
+      animation-duration: 22s;
+    }
+    .ambient-blob-3 {
+      top: 35%; left: 40%;
+      width: 38vw; height: 38vw;
+      max-width: 360px; max-height: 360px;
+      background: rgba(255, 149, 0, 0.35);
+      animation-delay: -12s;
+      animation-duration: 20s;
+    }
+    .dark .ambient-blob-1 { background: rgba(255, 107, 0, 0.45); filter: blur(100px); }
+    .dark .ambient-blob-2 { background: rgba(191, 0, 255, 0.4); filter: blur(100px); }
+    .dark .ambient-blob-3 { background: rgba(123, 47, 255, 0.3); filter: blur(100px); }
+
+    /* ── Liquid glass material ── */
+    .liquid-glass {
+      position: relative;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur)) saturate(200%);
+      -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);
+      border: 1px solid var(--glass-border);
+      box-shadow:
+        0 0 0 0.5px var(--glass-highlight) inset,
+        0 1.5px 0 var(--glass-highlight) inset,
+        0 0 40px rgba(191, 0, 255, 0.08),
+        0 0 60px rgba(255, 107, 0, 0.06),
+        0 24px 48px -12px var(--glass-shadow);
+    }
+    .liquid-glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        145deg,
+        rgba(255, 149, 0, 0.18) 0%,
+        rgba(255, 107, 0, 0.06) 25%,
+        rgba(191, 0, 255, 0.08) 60%,
+        transparent 80%
+      );
+      pointer-events: none;
+    }
+    .dark .liquid-glass {
+      box-shadow:
+        0 0 0 0.5px var(--glass-highlight) inset,
+        0 1.5px 0 var(--glass-highlight) inset,
+        0 0 50px rgba(191, 0, 255, 0.15),
+        0 0 80px rgba(255, 107, 0, 0.1),
+        0 24px 48px -12px var(--glass-shadow);
+    }
+    .dark .liquid-glass::before {
+      background: linear-gradient(
+        145deg,
+        rgba(255, 149, 0, 0.12) 0%,
+        rgba(123, 47, 255, 0.1) 40%,
+        transparent 70%
+      );
+    }
+
+    .glass-inset {
+      position: relative;
+      background: var(--glass-inset);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 1px 0 var(--glass-highlight) inset;
+    }
+    .dark .glass-inset {
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    }
+
+    /* ── App shell ── */
+    .app-shell {
+      border-radius: 28px;
+      padding: 28px 24px 24px;
+      width: 100%;
+      max-width: 420px;
+    }
+    .app-shell > * { position: relative; z-index: 1; }
+
+    /* ── Segmented language control ── */
+    .lang-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3px;
+      padding: 3px;
+      border-radius: 12px;
+      background: var(--glass-inset);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 1px 0 var(--glass-highlight) inset;
+      flex-shrink: 0;
+      width: 172px;
+      height: 62px;
+    }
+    .lang-tab {
+      font-size: 10px;
+      font-weight: 500;
+      height: 26px;
+      padding: 0 2px;
+      border-radius: 9px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: background 0.22s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.22s ease, box-shadow 0.22s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .lang-tab:hover:not(.active) {
+      color: var(--neon-purple-deep);
+      background: rgba(191, 0, 255, 0.08);
+    }
+    .dark .lang-tab:hover:not(.active) {
+      color: var(--neon-orange-light);
+      background: rgba(255, 107, 0, 0.1);
+    }
+    .lang-tab.active {
+      background: var(--gradient-neon);
+      color: #ffffff;
+      box-shadow:
+        0 2px 12px rgba(255, 107, 0, 0.35),
+        0 0 20px rgba(191, 0, 255, 0.25),
+        0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    }
+    .dark .lang-tab.active {
+      box-shadow:
+        0 2px 16px rgba(255, 107, 0, 0.4),
+        0 0 24px rgba(191, 0, 255, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    }
+
+    /* ── Preview ── */
+    .preview-text {
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.6;
+    }
+    .preview-area[lang="th"] {
+      font-family: var(--font-th);
+      line-height: 1.65;
+    }
+
+    .preview-area {
+      border-radius: 16px;
+      padding: 16px;
+      min-height: 168px;
+      max-height: 168px;
+      height: 168px;
+      width: 100%;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      color: var(--text-primary);
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box;
+    }
+    .preview-area::placeholder {
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+    .preview-area:focus {
+      border-color: rgba(255, 149, 0, 0.5);
+      box-shadow:
+        0 1px 0 var(--glass-highlight) inset,
+        0 0 0 3px rgba(191, 0, 255, 0.12),
+        0 0 20px rgba(255, 107, 0, 0.1);
+    }
+
+    /* ── Buttons ── */
+    .glass-btn {
+      position: relative;
+      background: var(--glass-inset);
+      backdrop-filter: blur(24px) saturate(170%);
+      -webkit-backdrop-filter: blur(24px) saturate(170%);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 1px 0 var(--glass-highlight) inset;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      height: 48px;
+      min-height: 48px;
+      padding: 0 12px;
+      line-height: 1.2;
+      transition: background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+    }
+    .glass-btn:hover {
+      background: rgba(255, 107, 0, 0.1);
+      border-color: rgba(255, 149, 0, 0.35);
+      transform: scale(1.015);
+      box-shadow:
+        0 1px 0 var(--glass-highlight) inset,
+        0 0 20px rgba(255, 107, 0, 0.15),
+        0 4px 16px var(--glass-shadow);
+    }
+    .dark .glass-btn:hover {
+      background: rgba(191, 0, 255, 0.12);
+      border-color: rgba(191, 0, 255, 0.35);
+      box-shadow:
+        0 1px 0 rgba(255, 149, 0, 0.1) inset,
+        0 0 24px rgba(191, 0, 255, 0.2);
+    }
+    .glass-btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      position: relative;
+      background: var(--gradient-neon);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      height: 48px;
+      min-height: 48px;
+      padding: 0 12px;
+      line-height: 1.2;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.25) inset,
+        0 4px 20px rgba(255, 107, 0, 0.4),
+        0 0 30px rgba(191, 0, 255, 0.3);
+      transition: box-shadow 0.22s ease, transform 0.22s ease, filter 0.22s ease;
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: scale(1.015);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.3) inset,
+        0 6px 28px rgba(255, 107, 0, 0.5),
+        0 0 40px rgba(191, 0, 255, 0.45);
+      filter: brightness(1.08);
+    }
+    .btn-primary:active:not(:disabled) { transform: scale(0.98); }
+    .btn-primary:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .dark .btn-primary {
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.2) inset,
+        0 4px 24px rgba(255, 107, 0, 0.45),
+        0 0 40px rgba(191, 0, 255, 0.35);
+    }
+    .dark .btn-primary:hover:not(:disabled) {
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.25) inset,
+        0 6px 32px rgba(255, 107, 0, 0.55),
+        0 0 50px rgba(191, 0, 255, 0.5);
+    }
+
+    .spin-once { animation: spin-once 0.5s ease; }
+
+    .avatar-glass {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--glass-inset);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 149, 0, 0.45);
+      box-shadow:
+        0 0 14px rgba(255, 107, 0, 0.25),
+        0 0 14px rgba(191, 0, 255, 0.2),
+        0 1px 0 var(--glass-highlight) inset;
+    }
+    .avatar-glass svg { color: var(--neon-purple-deep); }
+    .dark .avatar-glass svg { color: var(--neon-orange-light); }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 107, 0, 0.4), rgba(191, 0, 255, 0.4), transparent);
+      margin: 20px 0;
+    }
+
+    .text-secondary { color: var(--text-secondary); }
+
+    #support-only-tag {
+      font-size: 13px;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: visible;
+    }
+    body[data-ui-lang="th"] #support-only-tag {
+      font-family: var(--font-th);
+      font-size: 12px;
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-gradient {
+      background: var(--gradient-neon);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    #theme-toggle:hover {
+      background: var(--gradient-neon);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .creator-credit {
+      width: min(100%, 420px);
+      text-align: center;
+      margin: 0;
+      padding-top: 20px;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      color: var(--text-secondary);
+      opacity: 0.72;
+    }
+
+    body[data-ui-lang="th"] #creator-credit {
+      font-family: var(--font-th);
+      letter-spacing: -0.01em;
+    }
+
+    .creator-link {
+      font-weight: 400;
+      color: inherit;
+      text-decoration: none;
+      opacity: 0.92;
+      transition: opacity 0.2s ease;
+    }
+
+    .creator-link:hover {
+      opacity: 1;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .page-stack {
+      padding-top: max(12px, env(safe-area-inset-top, 0px));
+      padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
+    }
+
+    .top-banner {
+      width: min(100%, 420px);
+      margin: 0 0 14px;
+    }
+
+    .top-banner img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1024 / 571;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 107, 0, 0.14);
+      box-shadow:
+        0 10px 28px rgba(191, 0, 255, 0.1),
+        0 1px 0 rgba(255, 255, 255, 0.65) inset;
+    }
+
+    .dark .top-banner img {
+      border-color: rgba(191, 0, 255, 0.22);
+      box-shadow:
+        0 10px 28px rgba(255, 107, 0, 0.12),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    }
+  </style>
+</head>
+<body class="min-h-screen font-sans transition-colors duration-300">
+
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient-blob ambient-blob-1"></div>
+    <div class="ambient-blob ambient-blob-2"></div>
+    <div class="ambient-blob ambient-blob-3"></div>
+  </div>
+
+  <div class="page-stack relative z-10 min-h-screen flex flex-col items-center px-5">
+
+    <figure class="top-banner">
+        <img
+          src="/public/images/banner.jpg"
+          alt="EMIBONNIE"
+          width="1024"
+          height="571"
+          decoding="async"
+      />
+    </figure>
+
+    <!-- Main glass shell -->
+    <div class="app-shell liquid-glass">
+
+      <!-- Header -->
+      <header class="mb-1">
+        <div class="flex items-center justify-between gap-3 mb-1">
+          <h1 class="text-[22px] font-semibold tracking-tight brand-gradient shrink-0">TrendX</h1>
+          <nav class="lang-tabs" id="lang-tabs" role="tablist">
+            <button role="tab" data-lang="zh-CN" class="lang-tab active">简体中文</button>
+            <button role="tab" data-lang="zh-TW" class="lang-tab">繁体中文</button>
+            <button role="tab" data-lang="en" class="lang-tab">English</button>
+            <button role="tab" data-lang="th" class="lang-tab">ภาษาไทย</button>
+          </nav>
+        </div>
+        <p class="text-[13px] text-secondary whitespace-nowrap" id="support-only-tag">仅支持 EMIBONNIE</p>
+      </header>
+
+      <div class="divider"></div>
+
+      <!-- Preview section -->
+      <section>
+        <div class="flex items-center gap-3 mb-3">
+          <div class="avatar-glass">
+            <svg class="w-[15px] h-[15px]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-medium" id="preview-label">文案编辑</p>
+            <p class="text-[11px] text-secondary" id="char-count">0 字符</p>
+          </div>
+        </div>
+
+        <textarea
+          id="preview"
+          class="preview-text preview-area glass-inset"
+          rows="6"
+          spellcheck="false"
+          aria-label="Tweet editor"
+          placeholder="点击「随机文案」生成内容"
+        ></textarea>
+      </section>
+
+      <!-- Actions -->
+      <div class="flex gap-2.5 mt-5">
+        <button
+          id="btn-random"
+          class="glass-btn flex-1 flex items-center justify-center gap-2 py-3.5 px-4"
+        >
+          <svg id="icon-refresh" class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+          <span id="btn-random-label">随机文案</span>
+        </button>
+
+        <button
+          id="btn-tweet"
+          class="btn-primary flex-1 flex items-center justify-center gap-2 py-3.5 px-4"
+          disabled
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          <span id="btn-tweet-label">一键发推</span>
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <footer class="mt-5 text-center">
+        <p
+          id="disclaimer"
+          class="text-[11px] leading-relaxed text-secondary mb-3"
+        >本工具仅提供文案灵感，不涉及任何形式的自动化作弊行为。</p>
+        <button
+          id="theme-toggle"
+          class="text-[11px] text-secondary hover:opacity-80 transition-opacity"
+          aria-label="Toggle theme"
+        >◐ 切换主题</button>
+      </footer>
+
+    </div>
+
+    <p id="creator-credit" class="creator-credit mt-auto">
+      <span id="created-by-before">Created by </span><a
+        href="https://x.com/cunicornw_td"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="creator-link"
+      >Embers TD</a><span id="created-by-after"></span>
+    </p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
