@@ -108,6 +108,14 @@
     return preview.value.trim();
   }
 
+  function formatHashtags(raw) {
+    return raw
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .join("\n");
+  }
+
   function syncPreviewState() {
     btnTweet.disabled = getPreviewText().length === 0;
     updateCharCount();
@@ -206,8 +214,20 @@
 
   function buildTweet(randomLine) {
     const parts = [randomLine];
-    const tail = [CONFIG.keywords, CONFIG.hashtags].filter(Boolean).join("\n");
-    if (tail) parts.push(tail);
+    const tailParts = [];
+
+    if (CONFIG.keywords) {
+      tailParts.push(CONFIG.keywords);
+    }
+
+    if (CONFIG.hashtags) {
+      tailParts.push(formatHashtags(CONFIG.hashtags));
+    }
+
+    if (tailParts.length) {
+      parts.push(tailParts.join("\n"));
+    }
+
     return parts.join("\n\n");
   }
 
