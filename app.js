@@ -176,10 +176,18 @@
 
   function parseConfig(text) {
     const read = (key) =>
-      text.match(new RegExp(`${key}:\\s*"((?:\\\\.|[^"\\\\])*)"`))?.[1]?.replace(/\\"/g, '"') ?? "";
+      text.match(new RegExp(`${key}:\\s*"((?:\\\\.|[^"\\\\])*)"`))?.[1] ?? "";
+    const unescape = (s) =>
+      s
+        .replace(/\\\\/g, "\\")
+        .replace(/\\"/g, '"')
+        .replace(/\\r/g, "\r")
+        .replace(/\\n/g, "\n")
+        .replace(/\\t/g, "\t");
+
     return {
-      keywords: read("keywords"),
-      hashtags: read("hashtags"),
+      keywords: unescape(read("keywords")),
+      hashtags: unescape(read("hashtags")),
     };
   }
 
