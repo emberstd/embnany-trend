@@ -1,4 +1,4 @@
 const CONFIG = {
-  keywords: "EMIBONNIE UNDER THE FIRST MOON",
-  hashtags: "#MoonshadowSeriesEP1",
+  keywords: "EMIBONNIE BEAUTY INFINITY",
+  hashtags: "#InfinityMedicalClinicxEmiBonnie",
 };
