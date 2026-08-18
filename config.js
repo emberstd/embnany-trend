@@ -1,4 +1,4 @@
 const CONFIG = {
   keywords: "",
-  hashtags: "#WeLoveEmiBonnie",
+  hashtags: "#RedKiss_EMIBONNIE\n#WeLoveEmiBonnie\n#Emibonnie",
 };
