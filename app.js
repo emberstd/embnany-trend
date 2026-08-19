@@ -66,6 +66,7 @@
   const btnRandom = $("btn-random");
   const btnTweet = $("btn-tweet");
   const iconRefresh = $("icon-refresh");
+  const btnCopy = $("btn-copy");
   const langTabs = $("lang-tabs");
 
   const graphemeSegmenter = typeof Intl !== "undefined" && Intl.Segmenter
@@ -302,6 +303,42 @@
 
   btnRandom.addEventListener("click", generateRandomTweet);
   btnTweet.addEventListener("click", postTweet);
+  if (btnCopy) {
+    const originalCopyHTML = btnCopy.innerHTML;
+    async function copyPreviewToClipboard() {
+      const text = preview.value || "";
+      if (!text) {
+        // small visual cue: briefly disable then re-enable
+        btnCopy.disabled = true;
+        setTimeout(() => (btnCopy.disabled = false), 500);
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        // fallback for older browsers
+        try {
+          preview.select();
+          document.execCommand("copy");
+          window.getSelection().removeAllRanges();
+        } catch (e) {
+          console.error("Copy failed", e);
+          return;
+        }
+      }
+
+      // show feedback
+      btnCopy.innerHTML = '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" width="16" height="16"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 0 0-1.414 0L8 12.586 4.707 9.293a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.414 0l8-8a1 1 0 0 0 0-1.414z" clip-rule="evenodd"/></svg>';
+      btnCopy.setAttribute('aria-label', '已复制');
+      setTimeout(() => {
+        btnCopy.innerHTML = originalCopyHTML;
+        btnCopy.setAttribute('aria-label', '复制全部文案');
+      }, 1400);
+    }
+
+    btnCopy.addEventListener('click', copyPreviewToClipboard);
+  }
   preview.addEventListener("input", () => {
     previewIsGenerated = false;
     syncPreviewState();

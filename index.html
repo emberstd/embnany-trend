@@ -305,6 +305,32 @@
         0 0 0 3px rgba(191, 0, 255, 0.12),
         0 0 20px rgba(255, 107, 0, 0.1);
     }
+    /* Copy button positioned at bottom-right of the preview box */
+    .copy-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.06); /* lighter, more transparent */
+      backdrop-filter: blur(6px) saturate(140%);
+      -webkit-backdrop-filter: blur(6px) saturate(140%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 6px 18px rgba(10, 6, 12, 0.06), 0 1px 0 var(--glass-highlight) inset;
+      cursor: pointer;
+      transition: transform 0.12s ease, opacity 0.12s ease, background 0.12s ease;
+      z-index: 2;
+      opacity: 0.88;
+    }
+    .copy-btn svg { width: 14px; height: 14px; color: rgba(26,10,46,0.75); opacity: 0.95; }
+    .dark .copy-btn { background: rgba(20,8,40,0.22); border: 1px solid rgba(191,0,255,0.08); box-shadow: 0 6px 18px rgba(0,0,0,0.32); }
+    .dark .copy-btn svg { color: rgba(255,255,255,0.92); opacity: 0.95; }
+    .copy-btn:active { transform: scale(0.98); }
+    .copy-btn:disabled { opacity: 0.48; cursor: not-allowed; }
 
     /* ── Buttons ── */
     .glass-btn {
@@ -572,14 +598,22 @@
           </div>
         </div>
 
-        <textarea
-          id="preview"
-          class="preview-text preview-area glass-inset"
-          rows="6"
-          spellcheck="false"
-          aria-label="Tweet editor"
-          placeholder="点击「随机文案」生成内容"
-        ></textarea>
+        <div class="relative">
+          <textarea
+            id="preview"
+            class="preview-text preview-area glass-inset"
+            rows="6"
+            spellcheck="false"
+            aria-label="Tweet editor"
+            placeholder="点击「随机文案」生成内容"
+          ></textarea>
+          <button id="btn-copy" class="copy-btn" type="button" aria-label="复制全部文案">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" width="16" height="16">
+              <rect x="9" y="9" width="11" height="11" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
       </section>
 
       <!-- Actions -->
