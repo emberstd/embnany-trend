@@ -1,4 +1,4 @@
 const CONFIG = {
-  keywords: "CHAN BETWEEN KEY AND JAY",
-  hashtags: "#MoonshadowSeriesEP3",
+  keywords: "CHANKEY RELATIONSHIP WITH MELODY",
+  hashtags: "#MoonshadowSeriesEP4",
 };
