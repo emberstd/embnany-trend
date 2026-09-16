@@ -1,4 +1,4 @@
 const CONFIG = {
-  keywords: "CHANKEY OUR LOVE IS NOT BUSINESS",
-  hashtags: "#MoonshadowSeriesEP5",
+  keywords: "THE MOON GOT ITS KEY",
+  hashtags: "#MoonshadowSeriesEP6",
 };
