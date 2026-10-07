@@ -1,4 +1,4 @@
 const CONFIG = {
-  keywords: "LOVE WILL HEAL CHANKEY",
-  hashtags: "#MoonshadowSeriesEP8",
+  keywords: "ASK FOR THE MOON",
+  hashtags: "#MoonshadowSeriesEP9",
 };
