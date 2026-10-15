@@ -1,4 +1,4 @@
 const CONFIG = {
-  keywords: "LOVE TO THE MOON AND KEY",
-  hashtags: "#MoonshadowSeriesFinalEP",
+  keywords: "TO THE MOONKEY AFTER PARTY",
+  hashtags: "#MoonshadowSeriesAfterParty",
 };
