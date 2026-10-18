@@ -1,4 +1,4 @@
 const CONFIG = {
-  keywords: "TO THE MOONKEY AFTER PARTY",
-  hashtags: "#MoonshadowSeriesAfterParty",
+  keywords: "GRABFOOD X EMIBONNIEANY",
+  hashtags: "#GrabFoodถูกกว่าชัวร์xEmiBonnieAny",
 };
