@@ -1,4 +1,4 @@
 const CONFIG = {
-  keywords: "WEDNESDAY NIGHT WITHOUT CHANKEY",
-  hashtags: "#MoonshadowSeriesEP11",
+  keywords: "EMIBONNIE BLOOM IN MACAU",
+  hashtags: "#BBFanFest2026inMacau",
 };
